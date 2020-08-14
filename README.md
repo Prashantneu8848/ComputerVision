@@ -1,2 +1,2 @@
 # ComputerVision
-Practicing techniques of Computer Vision
+Practicing techniques of Computer Vision using python
