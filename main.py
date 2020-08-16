@@ -1,8 +1,9 @@
-import cv2
+from cv2 import *
+from matplotlib import pyplot as plt
 
 image = cv2.imread("background.jpg")
 (h, w, d) = image.shape
 print("width={}, height={}, depth={}".format(w, h, d))
-cv2.imshow("Image", image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()  
+imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+plt.imshow(imgrgb)
+plt.show()
