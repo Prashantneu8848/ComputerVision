@@ -26,6 +26,11 @@ image = image[:,:,1]
 #Cropping the grayscale image
 cropped = image[10:20, 100:200]
 
+#Adding a Gaussian blur filter to image.
+hsize = (31, 31) # kernel size is 31 * 31
+sigma = 5
+blurimg = cv2.GaussianBlur(image, hsize, sigma)
+
 imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 plt.imshow(imgrgb)
 plt.show()
