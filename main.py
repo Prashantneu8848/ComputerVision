@@ -31,6 +31,9 @@ hsize = (31, 31) # kernel size is 31 * 31
 sigma = 5
 blurimg = cv2.GaussianBlur(image, hsize, sigma)
 
+#Adding a median filter to image with kernel size 5.
+medianBlur = cv2.medianBlur(image, 5)
+
 imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 plt.imshow(imgrgb)
 plt.show()
