@@ -34,6 +34,13 @@ blurimg = cv2.GaussianBlur(image, hsize, sigma)
 #Adding a median filter to image with kernel size 5.
 medianBlur = cv2.medianBlur(image, 5)
 
+#Matching template in the image.
+img = image.copy()
+res = cv2.matchTemplate(img, cropped, cv2.TM_CCOEFF_NORMED)
+min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+bottom_right = (max_loc[0] + w, max_loc[1] + h)
+cv2.rectangle(img, max_loc, bottom_right, 255, 2)
+
 imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 plt.imshow(imgrgb)
 plt.show()
