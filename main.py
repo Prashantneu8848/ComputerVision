@@ -53,6 +53,10 @@ sobel_x_gradient = cv2.Sobel(image, cv2.CV_64F, 1, 0)
 sobel_y_gradient = cv2.Sobel(image, cv2.CV_64F, 0, 1)
 mag, direction = cv2.cartToPolar(sobel_x_gradient, sobel_y_gradient, angleInDegrees=True)
 
+# Edge detection using Canny Edge Detection Algorithm which has magnitude
+# threshold of 100 min and 200 max.
+canny_edge = cv2.Canny(image, 100, 200)
+
 imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 plt.imshow(imgrgb)
 plt.show()
