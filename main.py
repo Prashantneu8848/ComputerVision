@@ -1,4 +1,5 @@
 import cv2
+import math
 from matplotlib import pyplot as plt
 import numpy as np
 
@@ -18,7 +19,7 @@ print("width={}, height={}, depth={}".format(w, h, d))
 
 
 # Draw a diagonal line of 9 px in the image.
-image = cv2.line(image, (0, 0), (w, h), (0, 255, 0), 9)
+# image = cv2.line(image, (0, 0), (w, h), (0, 255, 0), 9)
 
 # Only get the green channel.
 image = image[:,:,1]
@@ -57,6 +58,23 @@ mag, direction = cv2.cartToPolar(sobel_x_gradient, sobel_y_gradient, angleInDegr
 # threshold of 100 min and 200 max.
 canny_edge = cv2.Canny(image, 100, 200)
 
-imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+# Use Standard Hough Transform to find candidate for lines.
+lines = cv2.HoughLines(canny_edge, 1, np.pi / 180, 150, None, 0, 0)
+
+# Draw the lines
+if lines is not None:
+    for i in range(0, len(lines)):
+        rho = lines[i][0][0]
+        theta = lines[i][0][1]
+        a = math.cos(theta)
+        b = math.sin(theta)
+        x0 = a * rho
+        y0 = b * rho
+        pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
+        pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
+        # Add lines to the edges detected from Canny Edge.
+        cv2.line(canny_edge, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
+
+imgrgb = cv2.cvtColor(canny_edge, cv2.COLOR_BGR2RGB)
 plt.imshow(imgrgb)
 plt.show()
