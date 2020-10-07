@@ -62,6 +62,10 @@ canny_edge = cv2.Canny(image, 100, 200)
 lines = cv2.HoughLines(canny_edge, 1, np.pi / 180, 150, None, 0, 0)
 
 # TODO (me) add a picture with circles and use Hough Transform for Circles.
+# TODO (me) add stereo picture and show epipolar geometry between the pictures.
+# TODO (me) use Harris Corner Detection Algorithm to find corners in image.
+# TODO (me) use SIFT to find corners in image.
+
 # Draw the lines
 if lines is not None:
     for i in range(0, len(lines)):
