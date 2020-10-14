@@ -97,6 +97,8 @@ display_image(canny_edge, 'line detection using Hough Transformation')
 
 # TODO (me) use SIFT to find corners in image.
 
+# TODO (me) adding pictures with glare and removing glare from the image.
+
 # use Harris Corner Detection Algorithm to find corners in image.
 gray = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2GRAY)
 gray = np.float32(gray)
