@@ -4,8 +4,9 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 def display_image(image, msg):
+    imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     plt.title(msg)
-    plt.imshow(image)
+    plt.imshow(imgrgb)
     plt.show()
 
 
@@ -85,8 +86,8 @@ dst = cv2.dilate(dst, None)
 
 # Threshold for an optimal value, it may vary depending on the image.
 imgCopy2[dst>0.01*dst.max()]=[0,0,255]
-imgCopy2rgb = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2RGB)
-display_image(imgCopy2rgb, 'harris corner detection')
+# imgCopy2rgb = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2RGB)
+display_image(imgCopy2, 'harris corner detection')
 
 # TODO (me) use SIFT to find corners in image.
 
@@ -104,5 +105,4 @@ if lines is not None:
         # Add lines to the edges detected from Canny Edge.
         cv2.line(canny_edge, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
 
-imgrgb = cv2.cvtColor(canny_edge, cv2.COLOR_BGR2RGB)
-display_image(imgrgb, 'edge detection using canny edge algorithm')
+display_image(canny_edge, 'edge detection using canny edge algorithm')
