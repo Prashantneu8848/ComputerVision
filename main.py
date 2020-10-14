@@ -3,6 +3,7 @@ import math
 from matplotlib import pyplot as plt
 import numpy as np
 
+
 def display_image(image, msg):
     imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     plt.title(msg)
@@ -23,7 +24,7 @@ imgCopy2 = image.copy()
 print(type(image))
 print(image.dtype)
 
-#Get the dimension of the image.
+# Get the dimension of the image.
 (h, w, d) = image.shape
 print("width={}, height={}, depth={}".format(w, h, d))
 
@@ -32,14 +33,14 @@ print("width={}, height={}, depth={}".format(w, h, d))
 # image = cv2.line(image, (0, 0), (w, h), (0, 255, 0), 9)
 
 # Only get the green channel.
-image = image[:,:,1]
+image = image[:, :, 1]
 display_image(image, 'image only with green channel')
 
 # Cropping the grayscale image
 cropped = image[10:20, 100:200]
 
 # Adding a Gaussian blur filter to image.
-hsize = (31, 31) # kernel size is 31 * 31
+hsize = (31, 31)  # kernel size is 31 * 31
 sigma = 5
 blurimg = cv2.GaussianBlur(image, hsize, sigma)
 display_image(blurimg, 'image with gaussian blur')
@@ -66,11 +67,13 @@ chosen.
 '''
 sobel_x_gradient = cv2.Sobel(image, cv2.CV_64F, 1, 0)
 sobel_y_gradient = cv2.Sobel(image, cv2.CV_64F, 0, 1)
-mag, direction = cv2.cartToPolar(sobel_x_gradient, sobel_y_gradient, angleInDegrees=True)
+mag, direction = cv2.cartToPolar(
+    sobel_x_gradient, sobel_y_gradient, angleInDegrees=True)
 
 # Edge detection using Canny Edge Detection Algorithm which has magnitude
 # threshold of 100 min and 200 max.
 canny_edge = cv2.Canny(image, 100, 200)
+display_image(canny_edge, 'edge detection using canny edge algorithm')
 
 # Use Standard Hough Transform to find candidate for lines.
 lines = cv2.HoughLines(canny_edge, 1, np.pi / 180, 150, None, 0, 0)
@@ -86,24 +89,21 @@ if lines is not None:
         pt1 = (int(x0 + 1000*(-b)), int(y0 + 1000*(a)))
         pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
         # Add lines to the edges detected from Canny Edge.
-        cv2.line(canny_edge, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
+        cv2.line(canny_edge, pt1, pt2, (0, 0, 255), 3, cv2.LINE_AA)
 
-display_image(canny_edge, 'edge detection using canny edge algorithm')
-
-# TODO (me) add a picture with circles and use Hough Transform for Circles.
+display_image(canny_edge, 'line detection using Hough Transformation')
 
 # TODO (me) add stereo picture and show epipolar geometry between the pictures.
 
 # TODO (me) use SIFT to find corners in image.
 
-
 # use Harris Corner Detection Algorithm to find corners in image.
 gray = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2GRAY)
 gray = np.float32(gray)
 dst = cv2.cornerHarris(gray, 2, 3, 0.04)
-#result is dilated for marking the corners, not important
+# result is dilated for marking the corners, not important
 dst = cv2.dilate(dst, None)
 # Threshold for an optimal value, it may vary depending on the image.
-imgCopy2[dst>0.01*dst.max()]=[0,0,255]
+imgCopy2[dst > 0.01*dst.max()] = [0, 0, 255]
 # imgCopy2rgb = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2RGB)
 display_image(imgCopy2, 'harris corner detection')
