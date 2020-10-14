@@ -3,11 +3,19 @@ import math
 from matplotlib import pyplot as plt
 import numpy as np
 
+def display_image(image, msg):
+    plt.title(msg)
+    plt.imshow(image)
+    plt.show()
+
+
 """
 Grayscale image contains only rows and cols.
 cv2 works with BGR while matplotlib works with RGB.
 """
 image = cv2.imread("background.jpg")
+display_image(image, 'Original Image')
+
 imgCopy2 = image.copy()
 
 # Get python type and datatype for the image.
@@ -24,6 +32,7 @@ print("width={}, height={}, depth={}".format(w, h, d))
 
 # Only get the green channel.
 image = image[:,:,1]
+display_image(image, 'image only with green channel')
 
 # Cropping the grayscale image
 cropped = image[10:20, 100:200]
@@ -77,8 +86,7 @@ dst = cv2.dilate(dst, None)
 # Threshold for an optimal value, it may vary depending on the image.
 imgCopy2[dst>0.01*dst.max()]=[0,0,255]
 imgCopy2rgb = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2RGB)
-plt.imshow(imgCopy2rgb)
-plt.show()
+display_image(imgCopy2rgb, 'harris corner detection')
 
 # TODO (me) use SIFT to find corners in image.
 
@@ -97,5 +105,4 @@ if lines is not None:
         cv2.line(canny_edge, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
 
 imgrgb = cv2.cvtColor(canny_edge, cv2.COLOR_BGR2RGB)
-plt.imshow(imgrgb)
-plt.show()
+display_image(imgrgb, 'edge detection using canny edge algorithm')
