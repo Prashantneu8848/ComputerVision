@@ -8,6 +8,7 @@ Grayscale image contains only rows and cols.
 cv2 works with BGR while matplotlib works with RGB.
 """
 image = cv2.imread("background.jpg")
+imgCopy2 = image.copy()
 
 # Get python type and datatype for the image.
 print(type(image))
@@ -62,9 +63,11 @@ canny_edge = cv2.Canny(image, 100, 200)
 lines = cv2.HoughLines(canny_edge, 1, np.pi / 180, 150, None, 0, 0)
 
 # TODO (me) add a picture with circles and use Hough Transform for Circles.
+
 # TODO (me) add stereo picture and show epipolar geometry between the pictures.
-# TODO (me) use Harris Corner Detection Algorithm to find corners in image.
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+# use Harris Corner Detection Algorithm to find corners in image.
+gray = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2GRAY)
 
 gray = np.float32(gray)
 dst = cv2.cornerHarris(gray, 2, 3, 0.04)
@@ -72,9 +75,9 @@ dst = cv2.cornerHarris(gray, 2, 3, 0.04)
 dst = cv2.dilate(dst, None)
 
 # Threshold for an optimal value, it may vary depending on the image.
-img[dst>0.01*dst.max()]=[0,0,255]
-imgrgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-plt.imshow(imgrgb)
+imgCopy2[dst>0.01*dst.max()]=[0,0,255]
+imgCopy2rgb = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2RGB)
+plt.imshow(imgCopy2rgb)
 plt.show()
 
 # TODO (me) use SIFT to find corners in image.
@@ -93,6 +96,6 @@ if lines is not None:
         # Add lines to the edges detected from Canny Edge.
         cv2.line(canny_edge, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
 
-# imgrgb = cv2.cvtColor(canny_edge, cv2.COLOR_BGR2RGB)
-# plt.imshow(imgrgb)
-# plt.show()
+imgrgb = cv2.cvtColor(canny_edge, cv2.COLOR_BGR2RGB)
+plt.imshow(imgrgb)
+plt.show()
