@@ -99,6 +99,9 @@ display_image(canny_edge, 'line detection using Hough Transformation')
 
 # TODO (me) adding picture with glare and removing glare from the image.
 
+# TODO (me) add algorithm to recover the shape of a picture with shade,
+# estimate surface normals and albedo.
+
 # use Harris Corner Detection Algorithm to find corners in image.
 gray = cv2.cvtColor(imgCopy2, cv2.COLOR_BGR2GRAY)
 gray = np.float32(gray)
