@@ -19,6 +19,7 @@ image = cv2.imread("background.jpg")
 display_image(image, 'Original Image')
 
 imgCopy2 = image.copy()
+sift_img1 = image.copy()
 
 # Get python type and datatype for the image.
 print(type(image))
@@ -37,7 +38,7 @@ image = image[:, :, 1]
 display_image(image, 'image only with green channel')
 
 # Cropping the grayscale image
-cropped = image[10:20, 100:200]
+cropped = image[10:12, 100:105]
 
 # Adding a Gaussian blur filter to image.
 hsize = (31, 31)  # kernel size is 31 * 31
@@ -93,9 +94,23 @@ if lines is not None:
 
 display_image(canny_edge, 'line detection using Hough Transformation')
 
-# TODO (me) add stereo picture and show epipolar geometry between the pictures.
-
 # TODO (me) use SIFT to find corners in image.
+sift_img2 = cv2.imread("cropped.jpg")
+
+sift = cv2.SIFT_create()
+keypoints1, des1 = sift.detectAndCompute(sift_img1, None)
+keypoints2, des2 = sift.detectAndCompute(sift_img2, None)
+
+bf = cv2.BFMatcher()
+matches = bf.knnMatch(des1, des2, k = 2)
+
+good = []
+for m,n in matches:
+    if m.distance < 0.75*n.distance:
+        good.append([m])
+# cv.drawMatchesKnn expects list of lists as matches.
+img3 = cv2.drawMatchesKnn(sift_img1, keypoints1, sift_img2, keypoints2,good,None,flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+display_image(img3, 'harris corner detection')
 
 # TODO (me) adding picture with glare and removing glare from the image.
 
