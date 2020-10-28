@@ -4,12 +4,23 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 
+"""
+Display image with a message on top.
+"""
 def display_image(image, msg):
     imgrgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     plt.title(msg)
     plt.imshow(imgrgb)
     plt.show()
 
+"""
+Displays five levels of Gaussian Image.
+"""
+def displayGaussianPyramid(image):
+    dup = image.copy()
+    for level in range(5):
+        dup = cv2.pyrDown(dup)
+        display_image(dup, "level: " + str(level))
 
 """
 Grayscale image contains only rows and cols.
@@ -17,6 +28,7 @@ cv2 works with BGR while matplotlib works with RGB.
 """
 image = cv2.imread("background.jpg")
 display_image(image, 'Original Image')
+displayGaussianPyramid(image)
 
 imgCopy2 = image.copy()
 sift_img1 = image.copy()
