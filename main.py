@@ -94,7 +94,6 @@ if lines is not None:
 
 display_image(canny_edge, 'line detection using Hough Transformation')
 
-# TODO (me) use SIFT to find corners in image.
 sift_img2 = cv2.imread("cropped.jpg")
 
 sift = cv2.SIFT_create()
