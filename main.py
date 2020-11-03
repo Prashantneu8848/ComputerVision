@@ -50,8 +50,8 @@ image = image[:, :, 1]
 display_image(image, 'image only with green channel')
 
 # Cropping the grayscale image
-cropped = image[10:12, 100:105]
-display_image(image, 'cropped green channel image')
+cropped = image[308:600, 100:250]
+display_image(cropped, 'cropped green channel image')
 
 # Adding a Gaussian blur filter to image.
 hsize = (31, 31)  # kernel size is 31 * 31
